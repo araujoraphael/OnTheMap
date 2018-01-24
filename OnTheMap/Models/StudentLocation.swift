@@ -13,7 +13,6 @@ struct StudentLocation {
     var mediaURL: String?
     
     init(withDictionary dictionary: [String: AnyObject]) {
-        
         latitude = dictionary["latitude"] as? Double
         longitude = dictionary["longitude"] as? Double
         mapString = dictionary["mapString"] as? String

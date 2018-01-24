@@ -12,7 +12,6 @@ class PlacesViewController: UIViewController, CustomTabBarControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var loadingView: UIView!
 
-    private var studentsInformations = [StudentInformation]()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,10 +20,6 @@ class PlacesViewController: UIViewController, CustomTabBarControllerDelegate {
         }
         
         self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.size.width, height: 1))
-        
-        if let tabBarVC = self.tabBarController as? CustomTabBarController {
-            self.studentsInformations.append(contentsOf: tabBarVC.studentsInformations)
-        }
     }
     
     func didStartGetStudentLocation() {
@@ -33,22 +28,22 @@ class PlacesViewController: UIViewController, CustomTabBarControllerDelegate {
         }
     }
     
-    func didFinishGetStudentLocation(error: Bool, message: String, studentsInformations: [StudentInformation]?) {
+    func didFinishGetStudentLocation() {
         DispatchQueue.main.async{
             self.loadingView.isHidden = true
-        }
-        
-        if !error {
-            self.studentsInformations.removeAll()
-            self.studentsInformations.append(contentsOf: studentsInformations!)
             self.tableView.reloadData()
-        } else {
-            let alert = UIAlertController(title: "",
-                                          message: "There was an error retrieving student data.",
-                                          preferredStyle: .alert)
-            let action = UIAlertAction(title: "DISMISS", style: .default, handler: nil)
-            alert.addAction(action)
-            
+        }
+    }
+    
+    func didFailGetStudentLocation(error: Error) {
+        let alert = UIAlertController(title: "",
+                                      message: error.localizedDescription,
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: "DISMISS", style: .default, handler: nil)
+        alert.addAction(action)
+        
+        DispatchQueue.main.async{
+            self.loadingView.isHidden = true
             self.present(alert, animated: true, completion: nil)
         }
     }
@@ -58,13 +53,11 @@ extension PlacesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         
-        let studentInformation = self.studentsInformations[indexPath.row]
+        let studentInformation = SharedData.shared.studentsInformations[indexPath.row]
         
         if let urlStr = studentInformation.location?.mediaURL {
             if let url = URL(string: urlStr) {
-                if UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         }
     }
@@ -77,12 +70,12 @@ extension PlacesViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.studentsInformations.count
+        return SharedData.shared.studentsInformations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlaceCell", for: indexPath) as! PlaceTableViewCell
-        cell.studentInformation = self.studentsInformations[indexPath.row]
+        cell.studentInformation = SharedData.shared.studentsInformations[indexPath.row]
         
         return cell
     }

@@ -8,12 +8,12 @@
 
 import UIKit
 protocol CustomTabBarControllerDelegate : AnyObject {
-    func didFinishGetStudentLocation(error: Bool, message: String, studentsInformations: [StudentInformation]?)
+    func didFinishGetStudentLocation()
+    func didFailGetStudentLocation(error: Error)
     func didStartGetStudentLocation()
 }
 class CustomTabBarController: UITabBarController {
     var customDelegate : CustomTabBarControllerDelegate?
-    var studentsInformations = [StudentInformation]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,42 +23,41 @@ class CustomTabBarController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.customDelegate?.didStartGetStudentLocation()
-        DataManager.getStudentLocations { (error, message, studentsInformations) in
-            DispatchQueue.main.async {
-                self.prepareForSendingStudentsInformations(error: error,
-                                                           message: message,
-                                                           studentsInformations: studentsInformations)
+        StudentInformationHandler.getStudentsLocations { (result) in
+            switch result {
+            case .success:
+                self.customDelegate?.didFinishGetStudentLocation()
+                break
+            case let .failure(error):
+                self.customDelegate?.didFailGetStudentLocation(error: error)
             }
         }
     }
 
-    func prepareForSendingStudentsInformations(error: Bool, message: String, studentsInformations: [StudentInformation]?) {
-        if error == false {
-            if let studentsInformationsSet = studentsInformations {
-                let sortedArray = studentsInformationsSet.sorted(by: {$0.updatedAt!.timeIntervalSince1970 > $1.updatedAt!.timeIntervalSince1970})
-                self.studentsInformations.removeAll()
-                self.studentsInformations.append(contentsOf: sortedArray)
-                self.customDelegate?.didFinishGetStudentLocation(error: error,
-                                                                 message: message,
-                                                                 studentsInformations: self.studentsInformations)
-            } else {
-                self.customDelegate?.didFinishGetStudentLocation(error: true, message: "No locations to show", studentsInformations: nil)
-            }
-        } else {
-            self.customDelegate?.didFinishGetStudentLocation(error: error, message: message, studentsInformations: nil)
-        }
-    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     @IBAction func logOutTapped(_ sender: Any) {
-        DataManager.deleteSession { (error, message) in
-            if error {
-                return
-            } else {
-                self.navigationController?.dismiss(animated: true, completion: nil)
+        SessionHandler.deleteSession { (result) in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    self.navigationController?.dismiss(animated: true, completion: nil)
+                }
+                break
+            case let .failure(error):
+                let alert = UIAlertController(title: "",
+                                              message: error.localizedDescription,
+                                              preferredStyle: .alert)
+                let action = UIAlertAction(title: "DISMISS", style: .default, handler: nil)
+                alert.addAction(action)
+                
+                DispatchQueue.main.async{
+                    self.present(alert, animated: true, completion: nil)
+                }
+                break
             }
         }
     }
@@ -69,11 +68,13 @@ class CustomTabBarController: UITabBarController {
     
     @IBAction func reloadTapped(_ sender: Any) {
         self.customDelegate?.didStartGetStudentLocation()
-        DataManager.getStudentLocations { (error, message, studentsInformations) in
-            DispatchQueue.main.async {
-                self.prepareForSendingStudentsInformations(error: error,
-                                                           message: message,
-                                                           studentsInformations: studentsInformations)
+        StudentInformationHandler.getStudentsLocations { (result) in
+            switch result {
+            case .success:
+                self.customDelegate?.didFinishGetStudentLocation()
+                break
+            case let .failure(error):
+                self.customDelegate?.didFailGetStudentLocation(error: error)
             }
         }
     }

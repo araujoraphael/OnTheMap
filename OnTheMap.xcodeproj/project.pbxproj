@@ -9,11 +9,15 @@
 /* Begin PBXBuildFile section */
 		BD0D2D672009919800165B20 /* PlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0D2D662009919800165B20 /* PlacesViewController.swift */; };
 		BD383B682006B5CE00EDE905 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD383B672006B5CE00EDE905 /* PlaceTableViewCell.swift */; };
+		BD497ED92014F2D2004D248D /* UdacityAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD497ED82014F2D1004D248D /* UdacityAPI.swift */; };
 		BD56703D200D29740038B4FC /* FoundLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD56703C200D29740038B4FC /* FoundLocationViewController.swift */; };
 		BD56703F200E58F70038B4FC /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD56703E200E58F70038B4FC /* Session.swift */; };
+		BD595AB620152B43004389D1 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD595AB520152B43004389D1 /* UdacityClient.swift */; };
+		BD595AB82015A541004389D1 /* SessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD595AB72015A541004389D1 /* SessionHandler.swift */; };
+		BD595ABA2015B601004389D1 /* StudentInformationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD595AB92015B601004389D1 /* StudentInformationHandler.swift */; };
+		BD595ABE20184622004389D1 /* CustomError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD595ABD20184622004389D1 /* CustomError.swift */; };
 		BD89E00F2009DFF9002A2E2F /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89E00E2009DFF9002A2E2F /* StudentInformation.swift */; };
 		BD89E0112009E42D002A2E2F /* AddLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89E0102009E42D002A2E2F /* AddLocationViewController.swift */; };
-		BD89E014200A7031002A2E2F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89E013200A7031002A2E2F /* DataManager.swift */; };
 		BD89E016200BB815002A2E2F /* StudentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD89E015200BB814002A2E2F /* StudentLocation.swift */; };
 		BDAF80A120066E3A002AE043 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAF80A020066E3A002AE043 /* AppDelegate.swift */; };
 		BDAF80A320066E3A002AE043 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAF80A220066E3A002AE043 /* LoginViewController.swift */; };
@@ -22,6 +26,7 @@
 		BDAF80AB20066E3A002AE043 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BDAF80A920066E3A002AE043 /* LaunchScreen.storyboard */; };
 		BDAF80B320068BAB002AE043 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAF80B220068BAB002AE043 /* MapViewController.swift */; };
 		BDAF80B72006B3C6002AE043 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAF80B62006B3C6002AE043 /* CustomTabBarController.swift */; };
+		BDC849DC2012A60C00BFCAC3 /* SharedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC849DB2012A60C00BFCAC3 /* SharedData.swift */; };
 		BDD04D412010DE2B00682392 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD04D3E2010DE2B00682392 /* Bolts.framework */; };
 		BDD04D422010DE2B00682392 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD04D3F2010DE2B00682392 /* FBSDKCoreKit.framework */; };
 		BDD04D432010DE2B00682392 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD04D402010DE2B00682392 /* FBSDKLoginKit.framework */; };
@@ -30,11 +35,15 @@
 /* Begin PBXFileReference section */
 		BD0D2D662009919800165B20 /* PlacesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesViewController.swift; sourceTree = "<group>"; };
 		BD383B672006B5CE00EDE905 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
+		BD497ED82014F2D1004D248D /* UdacityAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityAPI.swift; sourceTree = "<group>"; };
 		BD56703C200D29740038B4FC /* FoundLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoundLocationViewController.swift; sourceTree = "<group>"; };
 		BD56703E200E58F70038B4FC /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		BD595AB520152B43004389D1 /* UdacityClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
+		BD595AB72015A541004389D1 /* SessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHandler.swift; sourceTree = "<group>"; };
+		BD595AB92015B601004389D1 /* StudentInformationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformationHandler.swift; sourceTree = "<group>"; };
+		BD595ABD20184622004389D1 /* CustomError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomError.swift; sourceTree = "<group>"; };
 		BD89E00E2009DFF9002A2E2F /* StudentInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
 		BD89E0102009E42D002A2E2F /* AddLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationViewController.swift; sourceTree = "<group>"; };
-		BD89E013200A7031002A2E2F /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		BD89E015200BB814002A2E2F /* StudentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentLocation.swift; sourceTree = "<group>"; };
 		BDAF809D20066E3A002AE043 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDAF80A020066E3A002AE043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +54,7 @@
 		BDAF80AC20066E3A002AE043 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BDAF80B220068BAB002AE043 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		BDAF80B62006B3C6002AE043 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		BDC849DB2012A60C00BFCAC3 /* SharedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedData.swift; sourceTree = "<group>"; };
 		BDD04D3E2010DE2B00682392 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		BDD04D3F2010DE2B00682392 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		BDD04D402010DE2B00682392 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -88,19 +98,24 @@
 		BD89E00D2009DFEB002A2E2F /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				BDC849DB2012A60C00BFCAC3 /* SharedData.swift */,
 				BD89E00E2009DFF9002A2E2F /* StudentInformation.swift */,
 				BD89E015200BB814002A2E2F /* StudentLocation.swift */,
 				BD56703E200E58F70038B4FC /* Session.swift */,
+				BD595ABD20184622004389D1 /* CustomError.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		BD89E012200A701A002A2E2F /* Data */ = {
+		BD89E012200A701A002A2E2F /* DataClient */ = {
 			isa = PBXGroup;
 			children = (
-				BD89E013200A7031002A2E2F /* DataManager.swift */,
+				BD497ED82014F2D1004D248D /* UdacityAPI.swift */,
+				BD595AB520152B43004389D1 /* UdacityClient.swift */,
+				BD595AB72015A541004389D1 /* SessionHandler.swift */,
+				BD595AB92015B601004389D1 /* StudentInformationHandler.swift */,
 			);
-			path = Data;
+			path = DataClient;
 			sourceTree = "<group>";
 		};
 		BDAF809420066E39002AE043 = {
@@ -123,7 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				BDD04D3D2010DE1100682392 /* Frameworks */,
-				BD89E012200A701A002A2E2F /* Data */,
+				BD89E012200A701A002A2E2F /* DataClient */,
 				BD89E00D2009DFEB002A2E2F /* Models */,
 				BD0D2D6520098E6000165B20 /* Views */,
 				BD0D2D6420098E2E00165B20 /* ViewControllers */,
@@ -222,14 +237,19 @@
 				BD56703D200D29740038B4FC /* FoundLocationViewController.swift in Sources */,
 				BDAF80B320068BAB002AE043 /* MapViewController.swift in Sources */,
 				BDAF80B72006B3C6002AE043 /* CustomTabBarController.swift in Sources */,
+				BD595ABE20184622004389D1 /* CustomError.swift in Sources */,
+				BD595AB82015A541004389D1 /* SessionHandler.swift in Sources */,
+				BD595ABA2015B601004389D1 /* StudentInformationHandler.swift in Sources */,
 				BD89E0112009E42D002A2E2F /* AddLocationViewController.swift in Sources */,
+				BD595AB620152B43004389D1 /* UdacityClient.swift in Sources */,
 				BDAF80A120066E3A002AE043 /* AppDelegate.swift in Sources */,
 				BD383B682006B5CE00EDE905 /* PlaceTableViewCell.swift in Sources */,
 				BD89E00F2009DFF9002A2E2F /* StudentInformation.swift in Sources */,
 				BD56703F200E58F70038B4FC /* Session.swift in Sources */,
-				BD89E014200A7031002A2E2F /* DataManager.swift in Sources */,
 				BD89E016200BB815002A2E2F /* StudentLocation.swift in Sources */,
 				BD0D2D672009919800165B20 /* PlacesViewController.swift in Sources */,
+				BD497ED92014F2D2004D248D /* UdacityAPI.swift in Sources */,
+				BDC849DC2012A60C00BFCAC3 /* SharedData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

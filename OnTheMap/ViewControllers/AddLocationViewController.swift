@@ -19,7 +19,23 @@ class AddLocationViewController: UIViewController {
     }
 
     func areFieldsValid() -> Bool {
-        return self.locationTextField.text != "" && (self.urlTextField.text?.lowercased().contains("http://"))!
+        if self.locationTextField.text == "" {
+            return false
+        }
+        
+        if self.locationTextField.text == nil {
+            return false
+        }
+        
+        if self.urlTextField.text == "" {
+            return false
+        }
+        
+        if self.urlTextField.text == nil {
+            return false
+        }
+        
+        return true
     }
     
     @IBAction func cancelTapped(_ sender: Any) {

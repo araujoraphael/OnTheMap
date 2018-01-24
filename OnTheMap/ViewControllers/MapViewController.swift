@@ -12,7 +12,6 @@ import Foundation
 class MapViewController: UIViewController, CustomTabBarControllerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var loadingView: UIView!
-    private var studentsInformations = [StudentInformation]()
     private var mapAnnotations = [MapAnnotation]()
 
     override func viewDidLoad() {
@@ -21,29 +20,18 @@ class MapViewController: UIViewController, CustomTabBarControllerDelegate {
             tabBarVC.customDelegate = self
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
     
-    func didStartGetStudentLocation() {
-        DispatchQueue.main.async {
-          self.loadingView.isHidden = false
-        }
-    }
-    
-    func didFinishGetStudentLocation(error: Bool, message: String, studentsInformations: [StudentInformation]?) {
-        DispatchQueue.main.async {
-            self.loadingView.isHidden = true
-        }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        if !error {
+        if SharedData.shared.studentsInformations.count != self.mapAnnotations.count && SharedData.shared.studentsInformations.count != 0 {
+            DispatchQueue.main.async {
+                self.loadingView.isHidden = false
+            }
             self.mapView.removeAnnotations(self.mapAnnotations)
             self.mapAnnotations.removeAll()
-            self.studentsInformations.removeAll()
-            self.studentsInformations.append(contentsOf: studentsInformations!)
             
-            for studentInformation in self.studentsInformations {
+            for studentInformation in SharedData.shared.studentsInformations {
                 var studentName = ""
                 
                 if let firstName = studentInformation.firstName, let lastName = studentInformation.lastName {
@@ -60,15 +48,63 @@ class MapViewController: UIViewController, CustomTabBarControllerDelegate {
                     }
                 }
             }
+            DispatchQueue.main.async {
+                self.mapView.addAnnotations(self.mapAnnotations)
+                self.loadingView.isHidden = true
+
+            }
+        }
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+    func didStartGetStudentLocation() {
+        DispatchQueue.main.async {
+          self.loadingView.isHidden = false
+        }
+    }
+    
+    func didFinishGetStudentLocation() {
+        
+        DispatchQueue.main.async {
+            self.loadingView.isHidden = true
+        }
+        self.mapView.removeAnnotations(self.mapAnnotations)
+        self.mapAnnotations.removeAll()
+            
+        for studentInformation in SharedData.shared.studentsInformations {
+            var studentName = ""
+            
+            if let firstName = studentInformation.firstName, let lastName = studentInformation.lastName {
+                studentName = "\(firstName) \(lastName)"
+            }
+            
+            if let studentLocation = studentInformation.location {
+                if let latitude = studentLocation.latitude, let longitude = studentLocation.longitude {
+                    let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                    let annotation = MapAnnotation(title: studentName,
+                                                   subtitle: studentInformation.location!.mediaURL!,
+                                                   coordinate:  location )
+                    self.mapAnnotations.append(annotation)
+                }
+            }
+        }
+        DispatchQueue.main.async {
             self.mapView.addAnnotations(self.mapAnnotations)
-        } else {
-            let alert = UIAlertController(title: "",
-                                          message: "There was an error retrieving student data.",
-                                          preferredStyle: .alert)
-            
-            let action = UIAlertAction(title: "DISMISS", style: .default, handler: nil)
-            alert.addAction(action)
-            
+        }
+    }
+    
+    func didFailGetStudentLocation(error: Error) {
+        let alert = UIAlertController(title: "",
+                                      message: error.localizedDescription,
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: "DISMISS", style: .default, handler: nil)
+        alert.addAction(action)
+        
+        DispatchQueue.main.async{
+            self.loadingView.isHidden = true
             self.present(alert, animated: true, completion: nil)
         }
     }

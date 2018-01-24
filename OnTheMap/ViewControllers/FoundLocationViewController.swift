@@ -49,20 +49,23 @@ class FoundLocationViewController: UIViewController {
     
     @IBAction func finishTapped(_ sender: Any) {
         self.loadingView.isHidden = false
-        DataManager.postStudentLocation(mapItem: self.mapItem!) { (error, message) in
-            DispatchQueue.main.async {
-                self.loadingView.isHidden = true
-                
-                if error == true {
-                    let alert = UIAlertController(title: "Error trying add location",
-                                                  message: message,
-                                                  preferredStyle: .alert)
-                    let action = UIAlertAction(title: "DISMISS", style: UIAlertActionStyle.default, handler: nil)
-                    alert.addAction(action)
-                    self.present(alert, animated: true, completion: nil)
-                } else {
+        StudentInformationHandler.addStudentLocation(mapItem: self.mapItem!) { (result) in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
                     self.navigationController?.popToRootViewController(animated: true)
                 }
+                break
+            case let .failure(error):
+                let alert = UIAlertController(title: "Error trying add location",
+                                              message: error.localizedDescription,
+                                              preferredStyle: .alert)
+                let action = UIAlertAction(title: "DISMISS", style: UIAlertActionStyle.default, handler: nil)
+                alert.addAction(action)
+                DispatchQueue.main.async {
+                    self.present(alert, animated: true, completion: nil)
+                }
+                break
             }
         }
     }
@@ -84,5 +87,6 @@ extension FoundLocationViewController: MKMapViewDelegate {
         return view
     }
 }
+
 
 

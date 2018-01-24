@@ -17,7 +17,7 @@ struct StudentInformation {
     var updatedAt: Date?
     var location: StudentLocation?
 
-    init(withDictionary dictionary: [String: AnyObject]) {
+    init?(withDictionary dictionary: [String: AnyObject]) {
         key = dictionary["key"] as? String
         firstName = dictionary["firstName"] as? String
         lastName = dictionary["lastName"] as? String

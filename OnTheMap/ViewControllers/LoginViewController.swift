@@ -42,22 +42,32 @@ class LoginViewController: UIViewController {
         self.view.isUserInteractionEnabled = false
         self.activityIndicator.startAnimating()
         
-        DataManager.createSession(username: self.emailTextField.text!,
-                                  password: self.passwordTextField.text!)
-        {(error, message) in
+        
+        SessionHandler.createSession(email: self.emailTextField.text!, password: self.passwordTextField.text!) { (result) in
             DispatchQueue.main.async {
                 self.view.isUserInteractionEnabled = true
                 self.activityIndicator.stopAnimating()
-                if error == false {
+            }
+            
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "mapViewSegue", sender: nil)
-                } else {
-                    let errorAlert = UIAlertController(title: "Login error",
-                                                       message: message,
-                                                       preferredStyle: .alert)
-                    let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
-                    errorAlert.addAction(action)
-                    self.present(errorAlert, animated: true, completion: nil)
                 }
+                break
+            case let .failure(error):
+                var errorMessage = error.localizedDescription
+                if let customError = error as? CustomError {
+                    errorMessage = customError.message
+                }
+                
+                let errorAlert = UIAlertController(title: "Login error",
+                                                   message: errorMessage,
+                                                   preferredStyle: .alert)
+                let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+                errorAlert.addAction(action)
+                self.present(errorAlert, animated: true, completion: nil)
+                break
             }
         }
     }
@@ -76,24 +86,29 @@ class LoginViewController: UIViewController {
             } else if result!.isCancelled{
                 self.view.isUserInteractionEnabled = true
                 self.activityIndicator.stopAnimating()
-                print("login canceled by user")
             } else {
                 if FBSDKAccessToken.current() != nil {
                     if let fbToken = FBSDKAccessToken.current().tokenString {
-                        DataManager.createSession(withFacebookToken: fbToken) { (error, message) in
+                        SessionHandler.createSession(facebookToken: fbToken) { (result) in
                             DispatchQueue.main.async {
                                 self.view.isUserInteractionEnabled = true
                                 self.activityIndicator.stopAnimating()
-                                if error == false {
+                            }
+                            
+                            switch result {
+                            case .success:
+                                DispatchQueue.main.async {
                                     self.performSegue(withIdentifier: "mapViewSegue", sender: nil)
-                                } else {
-                                    let errorAlert = UIAlertController(title: "Login error",
-                                                                       message: message,
-                                                                       preferredStyle: .alert)
-                                    let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
-                                    errorAlert.addAction(action)
-                                    self.present(errorAlert, animated: true, completion: nil)
                                 }
+                                break
+                            case let .failure(error):
+                                let errorAlert = UIAlertController(title: "Login error",
+                                                                   message: error.localizedDescription,
+                                                                   preferredStyle: .alert)
+                                let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+                                errorAlert.addAction(action)
+                                self.present(errorAlert, animated: true, completion: nil)
+                                break
                             }
                         }
                     }
